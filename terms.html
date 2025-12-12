@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonApps - Информация и правила</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .home-btn {
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+        
+        .home-btn:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3);
+        }
+        
+        .content-container {
+            flex: 1;
+            padding: 30px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .content-wrapper {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .content-wrapper h2 {
+            color: #ffffff;
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 15px;
+        }
+        
+        .content-wrapper h3 {
+            color: #ffffff;
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .content-wrapper p {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .content-wrapper strong {
+            color: #ffffff;
+        }
+        
+        .content-wrapper a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .content-wrapper a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 10px;
+                gap: 15px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+                line-height: 1.3;
+            }
+            
+            .home-btn {
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+            
+            .content-container {
+                padding: 20px 10px;
+            }
+            
+            .content-wrapper {
+                padding: 25px;
+                border-radius: 8px;
+            }
+            
+            .content-wrapper h2 {
+                font-size: 24px;
+            }
+            
+            .content-wrapper h3 {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .home-btn {
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+            
+            .content-container {
+                padding: 15px 5px;
+            }
+            
+            .content-wrapper {
+                padding: 20px;
+            }
+            
+            .content-wrapper h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>NeonApps: информация и правила</h1>
+        <div class="header-buttons">
+            <a href="https://neonapps.ru" class="home-btn">На Главную</a>
+            <a href="https://telegram.me/neonapps" class="home-btn">Мы в Telegram</a>
+        </div>
+    </div>
+    
+    <div class="content-container">
+        <div class="content-wrapper">
+            <h2>Информация о сервисе</h2>
+            
+            <p>Наш сервис под названием <strong>"NeonApps"</strong> (ранее известный как KENOMARKET) начал свою деятельность в 2025 году как каталог приложений для ОС Android. Проект создан с целью собрать в одно место все необходимые приложения для выживания на старых версиях Android и не является коммерческим.</p>
+            
+            <h3>Версии и клиенты</h3>
+            <p>Сайт имеет основую и мобильную (mbasic) версию а также информационную страницу about.neonapps.ru (ранее about.kenomarket.pl). У нашего сервиса пока что нет клиентских приложений и доступ возможен только через браузер по адресу <a href="https://neonapps.ru" target="_blank">https://neonapps.ru</a>.</p>
+            
+          <h3>Наши проекты</h3>
+          <p>Кроме основного проекта NeonApps у нас есть дочерные проекты, такие как NeonLinks, NeonApps Community, сайт ЛайтМаркета, NeonApps Блог, WebCatalog. Также есть закрытый проект KENOMARKET LITE или же NeonApps Lite который был заменён mbasic версией сайта</p>
+          
+            <h3>Доступность сайта</h3>
+            <p>Для корректного отображения основной версии сайта нужен Android 4.1 или более поздняя версия, мобильная (mbasic) версия сайта работает на любых версиях Android и на любых устройствах. Сайт одинаково открывается в любых странах где есть интернет.</p>
+            
+          <h3>NeonApps на других языках</h3>
+          <p> Основной сайт NeonApps - neonapps.ru доступен на 12 языках: русский, английский, французкий, немецкий, испанский, польский, арабский, японский, китайский, корейский, хинди, индонезийский. Информационная страница - about.neonapps.ru доступна на 2 языках: русский и английский.</p>
+          
+            <h3>Публикация приложений</h3>
+            <p>Добавлять приложения на сайт могут только администраторы. Обычные посетители не могут добавлять приложения, но могут предложить приложение через наш чат в Telegram или страницу для обратной связи. После одобрения администрацией оно будет добавлено.</p>
+           
+            <h3>Наш чат и связь с нами</h3>
+            <p>Наша страница есть только в Telegram, VK и Discord. В других мессенджерах и социальных сетях наших чатов и каналов нет. Наши оффициальные сайты это neonapps.ru и kenomarket.pl.</p>
+            
+            <h3>Требования к приложениям</h3>
+            <p>Это каталог приложений для Android. Приложений для iOS, Windows, Symbian и других ОС здесь нет. Приложения, которые здесь имеются, поддерживают Android 4.4 и ниже. Версии с требованием Android 5.0+ и выше могут быть добавлены, когда на сайте уже присутствуют версии с более низким требованием.</p>
+          
+          <h3> Система аккаунтов NeonApps</h3>
+          <p> При регистрации аккаунта в NeonApps нужно указать никнейм и придумать пароль, мы не требуем паспортные данные. При желании пользователь может изменить никнейм, изменить аватарку либо удалить аккаунт.</p>
+        </div>
+    </div>
+</body>
+  </html>
