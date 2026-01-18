@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonApps About</title>
+    <meta name="theme-color" content="#00ff88">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NeonApps">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #b3d9ff;
+            --bg-dark: #000000;
+            --text-light: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float-orb 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea, var(--primary-color));
+            bottom: -50px;
+            right: -50px;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--secondary-color), #667eea);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.9); }
+            75% { transform: translate(30px, 50px) scale(1.05); }
+        }
+
+        /* Menu Button */
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            z-index: 1001;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .menu-line {
+            width: 22px;
+            height: 2px;
+            background: var(--text-light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-button.active .menu-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-button.active .menu-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.active .menu-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--card-border);
+            z-index: 1000;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 30px 25px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .sidebar-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-menu {
+            padding: 30px 0;
+            flex: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            padding: 16px 25px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border-left-color: var(--primary-color);
+            padding-left: 30px;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .language-selector {
+            padding: 25px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .language-selector select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-light);
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .language-selector select:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .language-selector select option {
+            background: #1a1a1a;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 80px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .logo {
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            animation: glow-text 3s ease-in-out infinite;
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 50px;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-color), #45a049);
+            color: var(--text-light);
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.6s forwards, pulse-button 2s ease-in-out 2s infinite;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.4);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Features Grid */
+        .section {
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, var(--text-light), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 60px rgba(76, 175, 80, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), #45a049);
+            border-radius: 16px;
+            animation: bounce-icon 2s ease-in-out infinite;
+        }
+
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--text-light);
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .feature-description {
+            color: var(--secondary-color);
+            line-height: 1.7;
+        }
+
+        /* Apps Grid */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .app-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .app-card:hover .app-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .app-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            line-height: 1.3;
+        }
+
+        .app-developer {
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            opacity: 0.8;
+            margin-bottom: 12px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            line-height: 1.3;
+        }
+
+        .view-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: linear-gradient(135deg, var(--primary-color), #45a049);
+            color: var(--text-light);
+            padding: 9px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .view-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .view-btn svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        /* App Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+            position: relative;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-close svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-light);
+        }
+
+        .modal-header {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .modal-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 22px;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-info h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-info p {
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+
+        .modal-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .stars {
+            color: #ffd700;
+        }
+
+        .modal-description {
+            margin: 25px 0;
+            color: var(--secondary-color);
+            line-height: 1.8;
+        }
+
+        .modal-versions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .modal-versions h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .version-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--primary-color), #45a049);
+            color: var(--text-light);
+            padding: 8px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .download-link:hover {
+            transform: scale(1.05);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(76, 175, 80, 0.2);
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), #45a049);
+            border-radius: 16px;
+        }
+
+        .project-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--text-light);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .project-description {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            padding: 12px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--primary-color);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 80px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        /* About Text */
+        .about-text {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin: 60px 0;
+            line-height: 1.9;
+            font-size: 1.15rem;
+            text-align: center;
+        }
+
+        .version-highlight {
+            background: linear-gradient(135deg, var(--primary-color), #45a049);
+            color: var(--text-light);
+            padding: 4px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0 4px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--secondary-color);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow-text {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(76, 175, 80, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(76, 175, 80, 0.8));
+            }
+        }
+
+        @keyframes pulse-button {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes bounce-icon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3rem;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .apps-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+
+            .modal-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .sidebar {
+                width: 280px;
+                left: -280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Button -->
+    <div class="menu-button" onclick="toggleSidebar()">
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">NEONAPPS</div>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="/internet" class="menu-item" data-ru="Интернет" data-en="Internet">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <span data-ru="Интернет" data-en="Internet">Интернет</span>
+            </a>
+            <a href="/apps" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+                <span data-ru="Программы" data-en="Apps">Программы</span>
+            </a>
+            <a href="/customs" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+                <span data-ru="Кастомизация" data-en="Customization">Кастомизация</span>
+            </a>
+            <a href="/games" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M21.58 16.09l-1.09-7.66C20.21 6.46 18.52 5 16.53 5H7.47C5.48 5 3.79 6.46 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19c.68 0 1.32-.27 1.8-.75L9 16h6l2.25 2.25c.48.48 1.13.75 1.8.75 1.56 0 2.75-1.37 2.53-2.91zM11 11H9v2H8v-2H6v-1h2V8h1v2h2v1zm4-1c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                <span data-ru="Игры" data-en="Games">Игры</span>
+            </a>
+        </nav>
+        <div class="language-selector">
+            <select id="langSelect" onchange="setLanguage(this.value)">
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="logo">NEONAPPS</h1>
+        <p class="tagline" data-ru="Только проверенные приложения для старых версий Android" data-en="Only verified apps for old Android versions">Только проверенные приложения для старых версий Android</p>
+        <a href="https://neonapps.ru" class="cta-button">
+            <span data-ru="Перейти на сайт" data-en="Go to Site">Перейти на сайт</span>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </a>
+    </section>
+
+    <div class="container">
+        <!-- Features Section -->
+        <section class="section">
+            <h2 class="section-title" data-ru="Наши преимущества" data-en="Our Advantages">Наши преимущества</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    </div>
+                    <h3 class="feature-title" data-ru="Проверенное качество" data-en="Verified Quality">Проверенное качество</h3>
+                    <p class="feature-description" data-ru="Каждое приложение тщательно проверяется на совместимость и безопасность перед публикацией в каталоге." data-en="Each app is thoroughly checked for compatibility and security before being published in the catalog.">Каждое приложение тщательно проверяется на совместимость и безопасность перед публикацией в каталоге.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                    </div>
+                    <h3 class="feature-title" data-ru="Старые версии Android" data-en="Old Android Versions">Старые версии Android</h3>
+                    <p class="feature-description" data-ru="Специализируемся на приложениях для устройств с Android 2.3-5.0, которые больше не поддерживаются." data-en="Specializing in apps for devices with Android 2.3-5.0 that are no longer supported.">Специализируемся на приложениях для устройств с Android 2.3-5.0, которые больше не поддерживаются.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <h3 class="feature-title" data-ru="Простой доступ" data-en="Easy Access">Простой доступ</h3>
+                    <p class="feature-description" data-ru="Удобный каталог с быстрым поиском и загрузкой приложений для вашего устройства." data-en="Convenient catalog with quick search and app downloads for your device.">Удобный каталог с быстрым поиском и загрузкой приложений для вашего устройства.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    </div>
+                    <h3 class="feature-title" data-ru="Персонализация" data-en="Personalization">Персонализация</h3>
+                    <p class="feature-description" data-ru="На нашем сайте доступна смена цветовой схемы и поддержка 12 языков для удобства пользователей." data-en="The main site offers color scheme customization and support for 12 languages for user convenience.">На основном сайте доступна смена цветовой схемы и поддержка 12 языков для удобства пользователей.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Apps Section -->
+        <section class="section">
+            <h2 class="section-title" data-ru="Недавно добавленные" data-en="Recently Added">Недавно добавленные</h2>
+            <div class="apps-grid" id="recentApps">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p data-ru="Загрузка приложений..." data-en="Loading apps...">Загрузка приложений...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <h2 class="section-title" data-ru="Наши достижения" data-en="Our Achievements">Наши достижения</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">200+</span>
+                    <p class="stat-label" data-ru="Проверенных приложений" data-en="Verified Apps">Проверенных приложений</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <p class="stat-label" data-ru="Активных пользователей" data-en="Active Users">Активных пользователей</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <p class="stat-label" data-ru="Безопасность" data-en="Security">Безопасность</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section">
+            <h2 class="section-title" data-ru="Наши проекты" data-en="Our Projects">Наши проекты</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                    </div>
+                    <h3 class="project-title" data-ru="Группа в Telegram" data-en="Telegram Group">Группа в Telegram</h3>
+                    <p class="project-description" data-ru="Здесь мы обсуждаем старые приложения и устройства" data-en="Here we discuss old apps and devices">Здесь мы обсуждаем старые приложения и устройства</p>
+                    <a href="https://telegram.me/neonapps" class="project-link" target="_blank">
+                        <span data-ru="Вступить в чат" data-en="Join Chat">Вступить в чат</span>
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+                    </div>
+                    <h3 class="project-title">NeonLinks</h3>
+                    <p class="project-description" data-ru="Полностью бесплатный сокращатель ссылок" data-en="Completely free link shortener">Полностью бесплатный сокращатель ссылок</p>
+                    <a href="https://neonlinks.ct.ws" class="project-link" target="_blank">
+                        <span data-ru="Сократить ссылку" data-en="Shorten Link">Сократить ссылку</span>
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Text -->
+        <section class="about-text">
+            <p data-ru="NeonApps — это уникальный каталог, созданный специально для владельцев старых Android-устройств. Мы понимаем, что современные приложения часто не совместимы с <span class='version-highlight'>Android 2.3</span> - <span class='version-highlight'>Android 5.0</span>, поэтому собрали коллекцию тщательно отобранных и проверенных приложений, которые отлично работают на ваших устройствах." data-en="NeonApps is a unique catalog created specifically for owners of old Android devices. We understand that modern apps are often incompatible with <span class='version-highlight'>Android 2.3</span> - <span class='version-highlight'>Android 5.0</span>, so we've compiled a collection of carefully selected and verified apps that work great on your devices.">
+                NeonApps — это уникальный каталог, созданный специально для владельцев старых Android-устройств. 
+                Мы понимаем, что современные приложения часто не совместимы с 
+                <span class="version-highlight">Android 2.3</span> - <span class="version-highlight">Android 5.0</span>, 
+                поэтому собрали коллекцию тщательно отобранных и проверенных приложений, 
+                которые отлично работают на ваших устройствах.
+            </p>
+            <br>
+            <p data-ru="Наша миссия — дать вторую жизнь старым устройствам и обеспечить их пользователей качественным программным обеспечением. Каждое приложение проходит проверку на совместимость и безопасность." data-en="Our mission is to give old devices a second life and provide their users with quality software. Each app undergoes compatibility and security checks.">
+                Наша миссия — дать вторую жизнь старым устройствам и обеспечить их пользователей 
+                качественным программным обеспечением. Каждое приложение проходит проверку 
+                на совместимость и безопасность.
+            </p>
+        </section>
+    </div>
+
+    <!-- App Modal -->
+    <div class="modal" id="appModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'ru';
+
+        // Sidebar functions
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            const menuButton = document.querySelector('.menu-button');
+
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            menuButton.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            const menuButton = document.querySelector('.menu-button');
+
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            menuButton.classList.remove('active');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSidebar();
+                closeModal();
+            }
+        });
+
+        // Language functions
+        function detectBrowserLanguage() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            return browserLang.startsWith('en') ? 'en' : 'ru';
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+
+            const elements = document.querySelectorAll('[data-ru], [data-en]');
+            elements.forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) {
+                    if (el.children.length === 0) {
+                        el.textContent = text;
+                    } else {
+                        const target = el.querySelector('span') || el;
+                        if (target !== el) {
+                            target.textContent = text;
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('langSelect').value = lang;
+        }
+
+        // Fetch recent apps
+        async function loadRecentApps() {
+            try {
+                const response = await fetch('https://neonapps.ru/api.jpg?action=get_apps&limit=8&offset=0');
+                const data = await response.json();
+
+                if (data.status === 'success' && data.data) {
+                    displayApps(data.data);
+                } else {
+                    showError();
+                }
+            } catch (error) {
+                console.error('Error loading apps:', error);
+                showError();
+            }
+        }
+
+        function displayApps(apps) {
+            const container = document.getElementById('recentApps');
+            container.innerHTML = '';
+
+            apps.forEach((app, index) => {
+                const appCard = document.createElement('div');
+                appCard.className = 'app-card';
+                appCard.style.animationDelay = `${index * 0.1}s`;
+                appCard.onclick = () => openAppModal(app.id);
+
+                appCard.innerHTML = `
+                    <img src="${app.icon || 'https://via.placeholder.com/80'}" alt="${app.name}" class="app-icon" onerror="this.src='https://via.placeholder.com/80'">
+                    <h3 class="app-name">${app.name}</h3>
+                    ${app.developer ? `<p class="app-developer">${app.developer}</p>` : ''}
+                    <a href="#" class="view-btn" onclick="event.preventDefault(); openAppModal(${app.id})">
+                        <span data-ru="Подробнее" data-en="View Details">${currentLang === 'ru' ? 'Подробнее' : 'View Details'}</span>
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
+                `;
+
+                container.appendChild(appCard);
+            });
+        }
+
+        function showError() {
+            const container = document.getElementById('recentApps');
+            container.innerHTML = `
+                <div class="loading">
+                    <p data-ru="Не удалось загрузить приложения" data-en="Failed to load apps">${currentLang === 'ru' ? 'Не удалось загрузить приложения' : 'Failed to load apps'}</p>
+                </div>
+            `;
+        }
+
+        // Modal functions
+        async function openAppModal(appId) {
+            const modal = document.getElementById('appModal');
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p data-ru="Загрузка..." data-en="Loading...">${currentLang === 'ru' ? 'Загрузка...' : 'Loading...'}</p>
+                </div>
+            `;
+
+            modal.classList.add('active');
+
+            try {
+                const response = await fetch(`https://neonapps.ru/api.jpg?action=get_app&id=${appId}`);
+                const data = await response.json();
+
+                if (data.status === 'success' && data.data) {
+                    displayAppDetails(data.data);
+                } else {
+                    modalBody.innerHTML = `<p>${currentLang === 'ru' ? 'Ошибка загрузки данных' : 'Error loading data'}</p>`;
+                }
+            } catch (error) {
+                console.error('Error loading app details:', error);
+                modalBody.innerHTML = `<p>${currentLang === 'ru' ? 'Ошибка загрузки данных' : 'Error loading data'}</p>`;
+            }
+        }
+
+        function displayAppDetails(app) {
+            const modalBody = document.getElementById('modalBody');
+            
+            const rating = app.rating ? parseFloat(app.rating).toFixed(1) : '0.0';
+            const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+
+            let versionsHTML = '';
+            if (app.versions && app.versions.length > 0) {
+                versionsHTML = `
+                    <div class="modal-versions">
+                        <h3 data-ru="Доступные версии" data-en="Available Versions">${currentLang === 'ru' ? 'Доступные версии' : 'Available Versions'}</h3>
+                        ${app.versions.map(v => `
+                            <div class="version-item">
+                                <div>
+                                    <strong>${v.version_name || v.version}</strong>
+                                    ${v.size ? `<span style="color: var(--secondary-color); margin-left: 10px;">(${v.size})</span>` : ''}
+                                </div>
+                                <a href="https://neonapps.ru/${v.file_path}" class="download-link" download>
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                                    <span data-ru="Скачать" data-en="Download">${currentLang === 'ru' ? 'Скачать' : 'Download'}</span>
+                                </a>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            modalBody.innerHTML = `
+                <div class="modal-header">
+                    <img src="${app.icon || 'https://via.placeholder.com/100'}" alt="${app.name}" class="modal-icon" onerror="this.src='https://via.placeholder.com/100'">
+                    <div class="modal-info">
+                        <h2>${app.name}</h2>
+                        ${app.developer ? `<p><strong data-ru="Разработчик:" data-en="Developer:">${currentLang === 'ru' ? 'Разработчик:' : 'Developer:'}</strong> ${app.developer}</p>` : ''}
+                        ${app.category ? `<p><strong data-ru="Категория:" data-en="Category:">${currentLang === 'ru' ? 'Категория:' : 'Category:'}</strong> ${app.category}</p>` : ''}
+                        <div class="modal-rating">
+                            <span class="stars">${stars}</span>
+                            <span>${rating}</span>
+                        </div>
+                    </div>
+                </div>
+                ${app.description ? `<div class="modal-description">${app.description}</div>` : ''}
+                ${versionsHTML}
+            `;
+        }
+
+        function closeModal() {
+            document.getElementById('appModal').classList.remove('active');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('appModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            const detectedLang = detectBrowserLanguage();
+            setLanguage(detectedLang);
+            loadRecentApps();
+        });
+    </script>
+</body>
+</html>
