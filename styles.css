@@ -52,11 +52,6 @@
             box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
         }
         
-        .home-btn:hover {
-            background-color: #f0f0f0;
-            box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3);
-        }
-        
         .content-container {
             flex: 1;
             padding: 30px 20px;
