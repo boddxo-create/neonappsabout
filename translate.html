@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переводчик</title>
+    <style>
+        /* Определение переменных */
+        :root {
+            /* СВЕТЛАЯ ТЕМА (По умолчанию) */
+            --bg-body: #f0f2f5;
+            --text-main: #1a1a1a;
+            --text-header: #1a1a1a;
+            --text-label: #555555;
+            --input-bg: #ffffff;
+            --input-text: #1a1a1a;
+            --input-border: #cccccc;
+            --card-bg: #ffffff;
+            --card-border: #e0e0e0;
+            --btn-bg: #000000;          /* Зеленый акцент (как в предыдущих файлах) */
+            --btn-text: #ffffff;
+            --btn-hover: #45a049;
+            --copy-btn-border: #cccccc;
+            --copy-btn-text: #555555;
+            --copy-btn-hover-bg: #1a1a1a;
+            --copy-btn-hover-text: #ffffff;
+            --loading-color: #666666;
+            --error-color: #d32f2f;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* ТЕМНАЯ ТЕМА (Оригинальная) */
+                --bg-body: #0a0a0a;
+                --text-main: #e0e0e0;
+                --text-header: #ffffff;
+                --text-label: #b0b0b0;
+                --input-bg: #1a1a1a;
+                --input-text: #ffffff;
+                --input-border: #333333;
+                --card-bg: #1a1a1a;
+                --card-border: #333333;
+                --btn-bg: #ffffff;      /* Или можно оставить зеленым: #4CAF50 */
+                --btn-text: #0a0a0a;
+                --btn-hover: #e0e0e0;
+                --copy-btn-border: #444444;
+                --copy-btn-text: #b0b0b0;
+                --copy-btn-hover-bg: #ffffff;
+                --copy-btn-hover-text: #0a0a0a;
+                --loading-color: #888888;
+                --error-color: #ff6b6b;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            padding: 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: var(--text-header);
+            letter-spacing: 1px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-label);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: var(--input-text);
+            font-size: 16px;
+            border-radius: 4px;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #888;
+        }
+
+        .translate-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            transition: background 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .translate-btn:hover {
+            background: var(--btn-hover);
+            transform: translateY(-2px);
+        }
+
+        .translate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .outputs {
+            display: grid;
+            gap: 15px;
+        }
+
+        .output-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            padding: 15px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .language-name {
+            font-size: 12px;
+            color: var(--text-label);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--copy-btn-border);
+            color: var(--copy-btn-text);
+            padding: 5px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--copy-btn-hover-bg);
+            background: var(--copy-btn-hover-bg);
+            color: var(--copy-btn-hover-text);
+        }
+
+        .copy-btn.copied {
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border-color: var(--btn-bg);
+        }
+
+        .output-text {
+            color: var(--text-main);
+            font-size: 15px;
+            line-height: 1.5;
+            min-height: 24px;
+        }
+
+        .loading {
+            color: var(--loading-color);
+            font-style: italic;
+        }
+
+        .error {
+            color: var(--error-color);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Переводчик</h1>
+        
+        <div class="input-section">
+            <label for="inputText">Русский текст</label>
+            <div class="input-wrapper">
+                <input type="text" id="inputText" placeholder="Введите текст для перевода...">
+            </div>
+        </div>
+
+        <button class="translate-btn" id="translateBtn">Перевести</button>
+
+        <div class="outputs" id="outputs"></div>
+    </div>
+
+    <script>
+        const languages = [
+            { code: 'ru', name: 'Русский' },
+            { code: 'en', name: 'Английский' },
+            { code: 'fr', name: 'Французский' },
+            { code: 'de', name: 'Немецкий' },
+            { code: 'es', name: 'Испанский' },
+            { code: 'pl', name: 'Польский' },
+            { code: 'ar', name: 'Арабский' },
+            { code: 'ja', name: 'Японский' },
+            { code: 'zh-CN', name: 'Китайский' },
+            { code: 'ko', name: 'Корейский' },
+            { code: 'hi', name: 'Хинди' },
+            { code: 'id', name: 'Индонезийский' }
+        ];
+
+        const outputsDiv = document.getElementById('outputs');
+        const inputText = document.getElementById('inputText');
+        const translateBtn = document.getElementById('translateBtn');
+
+        // Создаем поля для вывода
+        languages.forEach(lang => {
+            const div = document.createElement('div');
+            div.className = 'output-item';
+            div.innerHTML = `
+                <div class="output-header">
+                    <span class="language-name">${lang.name}</span>
+                    <button class="copy-btn" data-lang="${lang.code}">Копировать</button>
+                </div>
+                <div class="output-text" id="output-${lang.code}"></div>
+            `;
+            outputsDiv.appendChild(div);
+        });
+
+        // Функция перевода через Google Translate API (бесплатный метод)
+        async function translateToLanguage(text, targetLang) {
+            try {
+                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ru&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+                
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка перевода');
+                }
+
+                const data = await response.json();
+                
+                // Google Translate возвращает массив с переводами
+                if (data && data[0] && data[0][0] && data[0][0][0]) {
+                    return data[0][0][0];
+                }
+                
+                return null;
+            } catch (error) {
+                console.error(`Ошибка перевода на ${targetLang}:`, error);
+                return null;
+            }
+        }
+
+        // Основная функция перевода
+        async function translateText() {
+            const text = inputText.value.trim();
+            if (!text) {
+                alert('Введите текст для перевода');
+                return;
+            }
+
+            translateBtn.disabled = true;
+            translateBtn.textContent = 'Перевод...';
+
+            // Очищаем предыдущие результаты
+            languages.forEach(lang => {
+                const output = document.getElementById(`output-${lang.code}`);
+                output.textContent = 'Перевод...';
+                output.className = 'output-text loading';
+            });
+
+            // Переводим на все языки параллельно для скорости
+            const translations = await Promise.all(
+                languages.map(async lang => {
+                    if (lang.code === 'ru') {
+                        return { code: lang.code, text: text };
+                    }
+                    
+                    const translation = await translateToLanguage(text, lang.code);
+                    return { code: lang.code, text: translation };
+                })
+            );
+
+            // Отображаем результаты
+            translations.forEach(({ code, text: translatedText }) => {
+                const output = document.getElementById(`output-${code}`);
+                
+                if (translatedText) {
+                    output.textContent = translatedText;
+                    output.className = 'output-text';
+                } else {
+                    output.textContent = 'Ошибка перевода';
+                    output.className = 'output-text error';
+                }
+            });
+
+            translateBtn.disabled = false;
+            translateBtn.textContent = 'Перевести';
+        }
+
+        // Обработчики событий
+        translateBtn.addEventListener('click', translateText);
+        
+        inputText.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                translateText();
+            }
+        });
+
+        // Копирование текста
+        outputsDiv.addEventListener('click', (e) => {
+            if (e.target.classList.contains('copy-btn')) {
+                const langCode = e.target.dataset.lang;
+                const outputElem = document.getElementById(`output-${langCode}`);
+                const outputText = outputElem ? outputElem.textContent : '';
+                
+                if (outputText && outputText !== 'Перевод...' && outputText !== 'Ошибка перевода' && outputText !== '') {
+                    navigator.clipboard.writeText(outputText).then(() => {
+                        const btn = e.target;
+                        const originalText = btn.textContent;
+                        btn.textContent = 'Скопировано';
+                        btn.classList.add('copied');
+                        
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Ошибка копирования:', err);
+                        alert('Не удалось скопировать текст');
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+  </html>
