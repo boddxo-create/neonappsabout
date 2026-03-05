@@ -6,6 +6,9 @@
   <title>404 — Страница не найдена</title>
   <style>
     :root{ --bg:#000; --fg:#fff; --muted:rgba(255,255,255,0.65); }
+    media (prefers-color-scheme: dark) {
+    :root { --bg:#fff; --fg:#000; --muted:rgba(0,0,0,0.65); }
+    }
     html,body{ height:100%; }
     body{
       margin:0;
@@ -55,11 +58,11 @@
     .btn{
       display:inline-block;
       text-decoration:none;
-      color:var(--bg);
-      background:var(--fg);
+      color:#fff;
+      background:#4CAF50;
       padding:14px 26px;
       font-weight:600;
-      border-radius:999px; /* полностью закругленная */
+      border-radius:15px; /* полностью закругленная */
       box-shadow:0 6px 22px rgba(255,255,255,0.06);
       transition:transform .14s ease, box-shadow .14s ease, opacity .12s ease;
       -webkit-tap-highlight-color: transparent;
