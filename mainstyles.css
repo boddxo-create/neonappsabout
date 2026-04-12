@@ -390,7 +390,7 @@ body {
     background: var(--card-bg);
     backdrop-filter: blur(20px);
     border: 1px solid var(--card-border);
-    border-radius: 20px;
+    border-radius: 35px;
     padding: 40px 30px;
     text-align: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -418,7 +418,7 @@ body {
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--primary-color), #45a049);
-    border-radius: 16px;
+    border-radius: 22px;
     animation: bounce-icon 2s ease-in-out infinite;
 }
 
