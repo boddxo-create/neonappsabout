@@ -52,6 +52,8 @@
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
         <div class="gradient-orb orb-3"></div>
+    </div>
+
     <section class="hero-section">
         <h1 class="logo">NEONAPPS</h1>
         <p class="tagline" data-ru="Только проверенные приложения для старых версий Android" data-en="Only verified apps for old Android versions">Только проверенные приложения для старых версий Android</p>
@@ -123,6 +125,7 @@
         // Floating button logic
         window.addEventListener('scroll', () => {
             const floatingCta = document.getElementById('floatingCta');
+            if (!floatingCta) return;
             if (window.scrollY > 500) {
                 floatingCta.classList.add('visible');
             } else {
@@ -149,6 +152,7 @@
 
         function displayApps(apps) {
             const container = document.getElementById('recentApps');
+            if (!container) return;
             container.innerHTML = '';
 
             apps.forEach((app, index) => {
@@ -169,6 +173,7 @@
 
         function showError() {
             const container = document.getElementById('recentApps');
+            if (!container) return;
             container.innerHTML = `
                 <div class="loading">
                     <p data-ru="Не удалось загрузить приложения" data-en="Failed to load apps">${currentLang === 'ru' ? 'Не удалось загрузить приложения' : 'Failed to load apps'}</p>
@@ -255,11 +260,14 @@
         }
 
         // Close modal on overlay click
-        document.getElementById('appModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
+        const appModalEl = document.getElementById('appModal');
+        if (appModalEl) {
+            appModalEl.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+        }
 
         // Initialize
         window.addEventListener('DOMContentLoaded', () => {
